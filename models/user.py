@@ -13,18 +13,9 @@ class UserModel:
         return None
 
     @classmethod
-    def find_one_user(cls, where={}):
-        if where:
-            user = users.find_one(where)
-            client.close()
-            if user:
-                return parse_js(user)
-        return None
-
-    @classmethod
-    def find_by_login(cls, login):
+    def find_by_login(cls, login, filter={'_id': 0, 'senha': 0}):
         if login:
-            user = users.find_one({'nome_usuario': login})
+            user = users.find_one({'nome_usuario': login}, filter)
             client.close()
             if user:
                 return parse_js(user)

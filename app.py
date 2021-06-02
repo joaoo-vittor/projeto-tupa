@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 from os.path import dirname, join
 
 
-from resources.user import User, UserRegister, UserLogin
-from resources.aluno import Aluno
+from resources.user import User, UserRegister, UserLogin, UserLogout
+from resources.aluno import Aluno, AlunoParams
 from blocklist import BLOCKLIST
 
 
@@ -44,7 +44,9 @@ def token_de_acesso_invalido(jwt_header, jwt_payload):
 api.add_resource(User, '/user/<string:name>')
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
+api.add_resource(UserLogout, '/logout')
 api.add_resource(Aluno, '/aluno')
+api.add_resource(AlunoParams, '/aluno/<int:id_aluno>')
 
 
 if __name__ == '__main__':

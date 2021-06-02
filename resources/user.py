@@ -29,7 +29,8 @@ load_dotenv(path_env)
 class User(Resource):
 
     def get(self, name):
-        user = UserModel.find_one_user({'nome': name})
+        user = UserModel.find_by_login(name)
+
         if user:
             return user, 200
         return {'msg': f'User "{name}" not found.'}, 404
@@ -43,7 +44,7 @@ class UserRegister(Resource):
         senha = generate_password_hash(dados['senha'])
         dados.update({'senha': senha.replace(os.environ.get('HASH'), '')})
 
-        if UserModel.find_one_user({'nome': dados['nome']}):
+        if UserModel.find_by_login(dados['nome_usuario']):
             return {'msg': f'User already exists.'}, 400
 
         try:
@@ -59,7 +60,8 @@ class UserLogin(Resource):
     @classmethod
     def post(cls):
         dados = params.parse_args()
-        user = UserModel.find_by_login(dados['nome_usuario'])
+        user = UserModel.find_by_login(
+            dados['nome_usuario'], filter={'_id': 0})
 
         if user:
             if check_password_hash(os.environ.get('HASH')+user['senha'],
@@ -76,7 +78,7 @@ class UserLogin(Resource):
 
 class UserLogout(Resource):
 
-    @jwt_required
+    @jwt_required()
     def post(self):
         jwt_id = get_jwt()['jti']  # JWT Token Indentifier
         BLOCKLIST.add(jwt_id)
