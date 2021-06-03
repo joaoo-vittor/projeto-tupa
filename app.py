@@ -41,7 +41,7 @@ def token_de_acesso_invalido(jwt_header, jwt_payload):
 
 
 # Rotas
-api.add_resource(User, '/user/<string:name>')
+api.add_resource(User, '/user')
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')

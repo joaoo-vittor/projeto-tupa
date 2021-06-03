@@ -8,7 +8,6 @@ import json
 
 path_env = join(dirname(__file__), '.env')
 load_dotenv(path_env)
-
 client = MongoClient(os.environ.get('LINK_MONGO'))
 
 # Base

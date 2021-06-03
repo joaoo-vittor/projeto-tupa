@@ -61,7 +61,7 @@ class Aluno(Resource):
         current_user_id = get_jwt_identity()
 
         aluno = AlunoModel.find_alunos(
-            filter={'id_responsavel': current_user_id})
+            where={'id_responsavel': current_user_id})
 
         if aluno:
             return aluno, 200
@@ -80,7 +80,7 @@ class AlunoParams(Resource):
         dados.pop('id_responsavel')
         dados.pop('id_crianca')
 
-        new_al = AlunoModel.update_aluno(filter={
+        new_al = AlunoModel.update_aluno(where={
             'id_crianca': id_aluno,
             'id_responsavel': current_user_id},
             new_data=dados)
@@ -93,7 +93,7 @@ class AlunoParams(Resource):
     def get(self, id_aluno):
         current_user_id = get_jwt_identity()
 
-        aluno = AlunoModel.find_aluno(filter={
+        aluno = AlunoModel.find_aluno(where={
             'id_crianca': id_aluno,
             'id_responsavel': current_user_id})
 
@@ -105,7 +105,7 @@ class AlunoParams(Resource):
     @jwt_required()
     def delete(self, id_aluno):
         current_user_id = get_jwt_identity()
-        del_aluno = AlunoModel.delete_aluno(filter={
+        del_aluno = AlunoModel.delete_aluno(where={
             'id_crianca': id_aluno,
             'id_responsavel': current_user_id})
 
