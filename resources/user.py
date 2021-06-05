@@ -12,7 +12,7 @@ from datetime import datetime
 import math
 
 from models.user import UserModel
-from blocklist import BLOCKLIST
+from utils.blocklist import BLOCKLIST
 
 params = reqparse.RequestParser()
 

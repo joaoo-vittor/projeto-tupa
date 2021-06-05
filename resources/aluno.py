@@ -1,10 +1,13 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, request
 from flask_jwt_extended import jwt_required,  get_jwt_identity
-from mongo_connection import parse_js
+from utils.mongo_connection import parse_js
 from datetime import datetime
 import math
+import os
 
 from models.aluno import AlunoModel
+from utils.error_log import ErrorLog
+
 
 params = reqparse.RequestParser()
 
@@ -50,8 +53,9 @@ class Aluno(Resource):
         dados.update({'id_responsavel': current_user_id})
 
         try:
-            aluno = AlunoModel.insert_aluno(dados)
+            AlunoModel.insert_aluno(dados)
         except:
+
             return {'msg': "could not insert."}, 500
 
         return parse_js(dados), 201
@@ -113,3 +117,32 @@ class AlunoParams(Resource):
             return {'msg': 'successfully deleted.'}, 200
 
         return {'msg': 'it was not possible to delete.'}, 400
+
+
+class AlunoSaveFile(Resource):
+    BASE_DIR = os.getcwd() + '/files/alunos/'
+
+    @jwt_required()
+    def post(self):
+        current_user_id = get_jwt_identity()
+
+        file = request.files['file']
+        filenam = file.filename.split('.')
+
+        if not filenam[-1] in ['txt', 'csv']:
+            return {'msg': 'send file with extensions \'.csv\' or \'.txt\''}
+
+        time = math.ceil(datetime.timestamp(datetime.now()))
+        file.filename = f'{filenam[0]}_{str(time)}.{filenam[-1]}'
+
+        try:
+            file.save(os.path.join(self.BASE_DIR, file.filename))
+        except Exception as e:
+            ErrorLog.save_error_log('alunos', current_user_id,
+                                    AlunoSaveFile.__name__,
+                                    AlunoSaveFile.post.__name__,
+                                    str(e))
+
+            return {'msg': f'error while trying to save file \'{file.filename}\''}
+
+        return {'msg': f'file \'{file.filename}\' saved successfully.'}, 200

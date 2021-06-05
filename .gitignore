@@ -1,2 +1,3 @@
 .env
 data_tupa.json
+*.csv

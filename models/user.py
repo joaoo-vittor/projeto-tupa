@@ -1,4 +1,4 @@
-from mongo_connection import client, parse_js, users
+from utils.mongo_connection import client, parse_js, users
 from pymongo import ReturnDocument
 
 

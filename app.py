@@ -8,8 +8,8 @@ from os.path import dirname, join
 
 
 from resources.user import User, UserRegister, UserLogin, UserLogout
-from resources.aluno import Aluno, AlunoParams
-from blocklist import BLOCKLIST
+from resources.aluno import Aluno, AlunoParams, AlunoSaveFile
+from utils.blocklist import BLOCKLIST
 
 
 # Variaveis de Ambiente
@@ -22,7 +22,6 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=20)
-
 
 api = Api(app)
 jwt = JWTManager(app)
@@ -47,6 +46,7 @@ api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(Aluno, '/aluno')
 api.add_resource(AlunoParams, '/aluno/<int:id_aluno>')
+api.add_resource(AlunoSaveFile, '/aluno/file')
 
 
 if __name__ == '__main__':
