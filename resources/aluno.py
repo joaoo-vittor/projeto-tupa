@@ -1,13 +1,15 @@
 from flask_restful import Resource, reqparse, request
+from flask import send_from_directory
 from flask_jwt_extended import jwt_required,  get_jwt_identity
 from utils.mongo_connection import parse_js
 from datetime import datetime
 import math
 import os
 
+
 from models.aluno import AlunoModel
 from utils.error_log import ErrorLog
-
+from pipe.clear_dataset import ClearData
 
 params = reqparse.RequestParser()
 
@@ -122,9 +124,7 @@ class AlunoParams(Resource):
 class AlunoSaveFile(Resource):
     BASE_DIR = os.getcwd() + '/files/alunos/'
 
-    @jwt_required()
     def post(self):
-        current_user_id = get_jwt_identity()
 
         file = request.files['file']
         filenam = file.filename.split('.')
@@ -135,14 +135,30 @@ class AlunoSaveFile(Resource):
         time = math.ceil(datetime.timestamp(datetime.now()))
         file.filename = f'{filenam[0]}_{str(time)}.{filenam[-1]}'
 
+        save_path = os.path.join(self.BASE_DIR, file.filename)
+
         try:
-            file.save(os.path.join(self.BASE_DIR, file.filename))
+            file.save(save_path)
+
+            df = ClearData(self.BASE_DIR, file.filename)
+            df.clear_data()
+            df.save_data()
+
         except Exception as e:
-            ErrorLog.save_error_log('alunos', current_user_id,
+            ErrorLog.save_error_log('alunos', 123,
                                     AlunoSaveFile.__name__,
                                     AlunoSaveFile.post.__name__,
                                     str(e))
 
             return {'msg': f'error while trying to save file \'{file.filename}\''}
 
-        return {'msg': f'file \'{file.filename}\' saved successfully.'}, 200
+        return {'msg': f'file \'{file.filename}\' saved successfully and cleaned.',
+                'path_file': f'new_{df.file}'}, 200
+
+
+class AlunoGetFile(Resource):
+    BASE_DIR_DOWNLOAD = os.getcwd() + '/files/alunos_tratado/'
+
+    def get(self, name_file: str):
+        return send_from_directory(self.BASE_DIR_DOWNLOAD,
+                                   name_file, as_attachment=True)

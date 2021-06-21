@@ -8,7 +8,7 @@ from os.path import dirname, join
 
 
 from resources.user import User, UserRegister, UserLogin, UserLogout
-from resources.aluno import Aluno, AlunoParams, AlunoSaveFile
+from resources.aluno import Aluno, AlunoParams, AlunoSaveFile, AlunoGetFile
 from utils.blocklist import BLOCKLIST
 
 
@@ -47,7 +47,11 @@ api.add_resource(UserLogout, '/logout')
 api.add_resource(Aluno, '/aluno')
 api.add_resource(AlunoParams, '/aluno/<int:id_aluno>')
 api.add_resource(AlunoSaveFile, '/aluno/file')
+api.add_resource(AlunoGetFile, '/aluno/file/<string:name_file>')
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# def create_app():
+#     return app

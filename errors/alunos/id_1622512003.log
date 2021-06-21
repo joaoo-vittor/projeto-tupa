@@ -1,0 +1,11 @@
+[2021-06-12 11:09:47.644727] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: Error tokenizing data. C error: Expected 3 fields in line 65, saw 4
+
+[2021-06-12 11:33:39.672843] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['MICROÁREA', 'NOME_DA_MÃE', 'ENDEREÇO', 'UNIDADE_DE_SAÚDE'] not in index"
+[2021-06-12 11:34:48.080907] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['NOME_DA_MÃE', 'MICROÁREA', 'ENDEREÇO', 'UNIDADE_DE_SAÚDE'] not in index"
+[2021-06-12 11:35:42.670893] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['ENDEREÇO', 'MICROÁREA', 'UNIDADE_DE_SAÚDE', 'NOME_DA_MÃE'] not in index"
+[2021-06-12 11:37:43.678703] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['NOME_DA_MÃE', 'MICROÁREA', 'UNIDADE_DE_SAÚDE', 'ENDEREÇO'] not in index"
+[2021-06-12 11:38:52.889376] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['NOME_DA_MÃE', 'MICROÁREA', 'UNIDADE_DE_SAÚDE', 'ENDEREÇO'] not in index"
+[2021-06-12 11:39:48.369171] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['ENDEREÇO', 'UNIDADE_DE_SAÚDE', 'NOME_DA_MÃE', 'MICROÁREA'] not in index"
+[2021-06-12 11:40:14.819817] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['ENDEREÇO', 'NOME_DA_MÃE', 'MICROÁREA', 'UNIDADE_DE_SAÚDE'] not in index"
+[2021-06-12 11:40:48.028257] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['ENDEREÇO', 'MICROÁREA', 'UNIDADE_DE_SAÚDE', 'NOME_DA_MÃE'] not in index"
+[2021-06-12 11:41:30.280569] - usuario_id: 1622512003, name_class_error: AlunoSaveFile, name_func_error: post, body_error: "['ENDEREÇO', 'MICROÁREA', 'UNIDADE_DE_SAÚDE', 'NOME_DA_MÃE'] not in index"
